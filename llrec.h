@@ -72,19 +72,83 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred);
 
+// helper function prototypes
+template <typename Comp>
+void llfilter_helper(Node* shead, Comp pred);
+
+void llpivot_helper(Node *&shead, Node *&ssmaller, Node *&slarger, int spivot);
 //*****************************************************************************
 // Since template implementations should be in a header file, we will
 // implement the above function now.
 //*****************************************************************************
 
 template <typename Comp>
-Node* llfilter(Node* head, Comp pred)
+Node* llfilter(Node* head, Comp pred) 
 {
-    //*********************************************
-    // Provide your implementation below
-    //*********************************************
-
-
+	if(head == NULL) {
+		return NULL;
+	}
+	else {
+		Node* nextValid = llfilter(head->next, pred);
+		if(pred(head->val)) {
+			delete head;
+			return nextValid;
+		}
+		else {
+			head->next = nextValid;
+			return head;
+		}
+	}
 }
+// template <typename Comp>
+// Node* llfilter(Node* head, Comp pred)
+// {
+// 	// if we use tail recursion then we need to find the first element in head that can stay
+// 	if(head == NULL) {
+// 		return NULL;
+// 	}
+// 	else {
+// 						Node* temp = head;
+// 						// find the first element that can stay by a while loop
+// 						while(pred(temp->val)) {
+// 							Node* temp1 = temp;
+// 							temp = temp->next;
+// 							delete temp1;
+// 							if(temp == NULL) {break;}
+// 						}
+// 						if(temp == NULL) {
+// 							// if temp is NULL then all the elements in head are filtered 
+// 							return NULL;
+// 						}
+// 						else {
+// 							// call helper function
+// 							Node* temp2 = temp;
+// 							llfilter_helper(temp2, pred);
+// 							return temp;
+// 						}
+// 	}
+// }
+
+// // helper function implementation
+// template <typename Comp>
+// void llfilter_helper(Node* shead, Comp pred)
+// {
+// 	// s stands for substitute
+// 	if(shead == NULL) {
+// 		return;
+// 	}
+// 	else if(pred(shead->val)) {
+// 		// we should delete this
+// 		Node* temp3 = shead;
+// 		shead = shead->next;
+// 		delete temp3;
+// 		llfilter_helper(shead, pred);
+// 	}
+// 	else {
+// 		// move on to the next element
+// 		shead = shead->next;
+// 		llfilter_helper(shead, pred);
+// 	}
+// }
 
 #endif
