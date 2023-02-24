@@ -3,6 +3,7 @@
 #include <functional>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 //---
 using namespace std;
 
@@ -147,8 +148,8 @@ private:
 template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap(int m, PComparator c)
 {
-	m=m;
-	c=c;
+	this->m=m;
+	this->c=c;
 }
 
 template <typename T, typename PComparator>
